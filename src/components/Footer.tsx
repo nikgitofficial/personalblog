@@ -55,7 +55,7 @@ export default function Footer({
               className="text-3xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent"
               style={{ fontFamily: "Playfair Display, serif" }}
             >
-              NickPacs
+              NikBlog
             </h3>
             <p
               className={`text-sm leading-relaxed mb-6 ${
@@ -139,7 +139,7 @@ export default function Footer({
               isDark ? "text-zinc-500" : "text-zinc-600"
             }`}
           >
-            © {currentYear} NickPacs. All rights reserved.
+            © {currentYear} NikBlog. All rights reserved.
           </p>
           <p
             className={`text-sm flex items-center gap-2 ${
@@ -148,7 +148,7 @@ export default function Footer({
           >
             Made with{" "}
             <Heart size={16} className="text-rose-500" fill="currentColor" />{" "}
-            and lots of coffee
+            and lots of coffee  By:Nikko
           </p>
         </div>
       </div>

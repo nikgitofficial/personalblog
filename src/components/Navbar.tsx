@@ -37,7 +37,7 @@ export default function Navbar({
             className="font-serif text-2xl font-bold tracking-tight"
             style={{ fontFamily: "Playfair Display, serif" }}
           >
-            NickPacs
+            NikBlog
           </h1>
 
           {/* Desktop nav */}
