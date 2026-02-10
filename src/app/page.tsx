@@ -29,23 +29,24 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const PersonalBlog = () => {
-  
+
+  // Use the same type everywhere
   type ArticleId = string | number;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [mounted, setMounted] = useState(false);
-  const [currentView, setCurrentView] = useState('home');
-  const [selectedArticle, setSelectedArticle] = useState<number | null>(null);
-  const [selectedProject, setSelectedProject] = useState<number | null>(null);
-  const [likedArticles, setLikedArticles] = useState<Set<ArticleId>>(
-  new Set<ArticleId>()
-);
- const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<ArticleId>>(
-  new Set<ArticleId>()
-);
+  const [currentView, setCurrentView] = useState<'home' | 'article' | 'project'>('home');
+  const [selectedArticle, setSelectedArticle] = useState<typeof blogPosts[number] | null>(null);
+  const [selectedProject, setSelectedProject] = useState<typeof projects[number] | null>(null);
+
+  const [likedArticles, setLikedArticles] = useState<Set<ArticleId>>(new Set());
+  const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<ArticleId>>(new Set());
+
   const [showWelcome, setShowWelcome] = useState(true);
+
 
   useEffect(() => {
     setMounted(true);
@@ -1426,23 +1427,21 @@ const closeProject = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-const toggleLike = (articleId: string | number) => {
-  setLikedArticles((prev: Set<string | number>) => {
-    const newSet = new Set(prev);
-
-    if (newSet.has(articleId)) {
-      newSet.delete(articleId);
-    } else {
-      newSet.add(articleId);
-    }
-
-    return newSet;
-  });
-};
+const toggleLike = (articleId: ArticleId) => {
+    setLikedArticles((prev) => {
+      const newSet = new Set(prev);
+      if (newSet.has(articleId)) {
+        newSet.delete(articleId);
+      } else {
+        newSet.add(articleId);
+      }
+      return newSet;
+    });
+  };
 
 
-  const toggleBookmark = (articleId) => {
-    setBookmarkedArticles(prev => {
+ const toggleBookmark = (articleId: ArticleId) => {
+    setBookmarkedArticles((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(articleId)) {
         newSet.delete(articleId);
