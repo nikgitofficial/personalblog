@@ -1,56 +1,68 @@
-import React from 'react';
+"use client";
 
-interface FooterProps {
-  isDark: boolean;
-  scrollToSection: (section: string) => void;
-  setSelectedCategory: (category: string) => void;
-}
+import React from "react";
+import { Heart, Github, Twitter, Linkedin, Mail } from "lucide-react";
 
-const Footer: React.FC<FooterProps> = ({ isDark, scrollToSection, setSelectedCategory }) => {
-  const navItems = ['Articles', 'About', 'Projects', 'Contact'];
-  const categories = ['Design', 'Development', 'Technology', 'Personal'];
+export default function Footer({ isDark, scrollToSection, setSelectedCategory }) {
+  const currentYear = new Date().getFullYear();
+
+  const footerLinks = [
+    { label: "Articles", action: () => { scrollToSection("articles"); setSelectedCategory("All"); } },
+    { label: "About", action: () => scrollToSection("about") },
+    { label: "Projects", action: () => scrollToSection("projects") },
+    { label: "Contact", action: () => scrollToSection("contact") },
+  ];
 
   const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com/nikgitofficial' },
-  { name: 'LinkedIn', url: 'https://linkedin.com/in/nikko-mp-458682298' },
-  { name: 'Email', url: 'mailto:nickforjobacc@gmail.com' },
-];
-
+    { icon: Github, href: "https://github.com/nikgitofficial", label: "GitHub" },
+    { icon: Twitter, href: "#", label: "Twitter" },
+    { icon: Linkedin, href: "linkedin.com/in/nikko-mp-undefined-458682298", label: "LinkedIn" },
+    { icon: Mail, href: "mailto:nickforjobacc@gmail.com", label: "Email" },
+  ];
 
   return (
-    <footer
-      className={`${
-        isDark ? 'bg-zinc-950' : 'bg-white'
-      } py-12 px-6 border-t ${isDark ? 'border-zinc-800' : 'border-zinc-200'}`}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-4 gap-8 mb-8">
-          {/* About */}
-          <div>
-            <h4 className="font-bold mb-4 text-lg" style={{ fontFamily: 'Playfair Display, serif' }}>
+    <footer className={`${isDark ? 'bg-zinc-950 border-zinc-800' : 'bg-white border-zinc-200'} border-t`}>
+      <div className="max-w-7xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-4 gap-12 mb-12">
+          {/* Brand */}
+          <div className="md:col-span-2">
+            <h3
+              className="text-3xl font-bold mb-4 bg-gradient-to-r from-violet-600 to-purple-600 bg-clip-text text-transparent"
+              style={{ fontFamily: "Playfair Display, serif" }}
+            >
               NickPacs
-            </h4>
-            <p className={`${isDark ? 'text-zinc-400' : 'text-zinc-600'} text-sm`}>
-              Designer × Developer × Creative Thinker
+            </h3>
+            <p className={`text-sm leading-relaxed mb-6 ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}>
+              Crafting thoughtful content at the intersection of design, development, and creativity. 
+              Join me on this journey of building, learning, and sharing.
             </p>
-            <p className={`${isDark ? 'text-zinc-500' : 'text-zinc-500'} text-sm mt-2`}>
-              Building beautiful digital experiences.
-            </p>
+            <div className="flex gap-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`p-3 rounded-full ${isDark ? 'bg-zinc-800 hover:bg-zinc-700' : 'bg-zinc-100 hover:bg-zinc-200'} transition-all hover:scale-110`}
+                  aria-label={social.label}
+                >
+                  <social.icon size={18} />
+                </a>
+              ))}
+            </div>
           </div>
 
-          {/* Navigation */}
+          {/* Quick Links */}
           <div>
-            <h5 className="font-bold mb-4">Navigate</h5>
-            <ul className="space-y-2 text-sm">
-              {navItems.map((item) => (
-                <li key={item}>
+            <h4 className="font-bold mb-4 text-lg">Quick Links</h4>
+            <ul className="space-y-3">
+              {footerLinks.map((link) => (
+                <li key={link.label}>
                   <button
-                    onClick={() => scrollToSection(item.toLowerCase())}
-                    className={`${
-                      isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-900'
-                    } transition-colors bg-transparent border-none cursor-pointer`}
+                    onClick={link.action}
+                    className={`text-sm hover:text-violet-600 transition-colors bg-transparent border-none cursor-pointer ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}
                   >
-                    {item}
+                    {link.label}
                   </button>
                 </li>
               ))}
@@ -59,59 +71,35 @@ const Footer: React.FC<FooterProps> = ({ isDark, scrollToSection, setSelectedCat
 
           {/* Categories */}
           <div>
-            <h5 className="font-bold mb-4">Categories</h5>
-            <ul className="space-y-2 text-sm">
-              {categories.map((item) => (
-                <li key={item}>
+            <h4 className="font-bold mb-4 text-lg">Categories</h4>
+            <ul className="space-y-3">
+              {["Design", "Development", "Technology", "Personal"].map((cat) => (
+                <li key={cat}>
                   <button
                     onClick={() => {
-                      setSelectedCategory(item);
-                      scrollToSection('articles');
+                      setSelectedCategory(cat);
+                      scrollToSection("articles");
                     }}
-                    className={`${
-                      isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-900'
-                    } transition-colors bg-transparent border-none cursor-pointer`}
+                    className={`text-sm hover:text-violet-600 transition-colors bg-transparent border-none cursor-pointer ${isDark ? 'text-zinc-400' : 'text-zinc-600'}`}
                   >
-                    {item}
+                    {cat}
                   </button>
                 </li>
               ))}
             </ul>
           </div>
-
-          {/* Social Links */}
-          <div>
-            <h5 className="font-bold mb-4">Connect</h5>
-            <ul className="space-y-2 text-sm">
-              {socialLinks.map((item) => (
-                <li key={item.name}>
-                  <a
-                    href={item.url}
-                    target={item.name !== 'Email' ? '_blank' : undefined}
-                    rel={item.name !== 'Email' ? 'noopener noreferrer' : undefined}
-                    className={`${
-                      isDark ? 'text-zinc-400 hover:text-white' : 'text-zinc-600 hover:text-zinc-900'
-                    } transition-colors`}
-                  >
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
 
-        <div
-          className={`pt-8 border-t text-center text-sm ${
-            isDark ? 'border-zinc-800 text-zinc-500' : 'border-zinc-200 text-zinc-600'
-          }`}
-        >
-          <p>© {new Date().getFullYear()} NickPacs. Crafted with ❤️ and ☕</p>
-          <p className="mt-2 text-xs">Built with React, Next.js, Tailwind CSS</p>
+        {/* Bottom */}
+        <div className={`pt-8 border-t ${isDark ? 'border-zinc-800' : 'border-zinc-200'} flex flex-col md:flex-row justify-between items-center gap-4`}>
+          <p className={`text-sm ${isDark ? 'text-zinc-500' : 'text-zinc-600'}`}>
+            © {currentYear} NickPacs. All rights reserved.
+          </p>
+          <p className={`text-sm flex items-center gap-2 ${isDark ? 'text-zinc-500' : 'text-zinc-600'}`}>
+            Made with <Heart size={16} className="text-rose-500" fill="currentColor" /> and lots of coffee
+          </p>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}

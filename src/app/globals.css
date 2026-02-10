@@ -1,26 +1,217 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Welcome screen background */
+.welcome-bg {
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a0a2e 50%, #0a0a0f 100%);
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animations */
+@keyframes fade-in-scale {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-scale {
+  animation: fade-in-scale 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Scrollbar styling */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 92, 246, 0.5);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 92, 246, 0.7);
+}
+
+/* Prose styles for article content */
+.prose {
+  @apply max-w-none;
+}
+
+.prose h2 {
+  @apply text-3xl font-bold mt-12 mb-6;
+  font-family: 'Playfair Display', serif;
+}
+
+.prose h3 {
+  @apply text-2xl font-bold mt-10 mb-4;
+  font-family: 'Playfair Display', serif;
+}
+
+.prose h4 {
+  @apply text-xl font-bold mt-8 mb-3;
+  font-family: 'Playfair Display', serif;
+}
+
+.prose p {
+  @apply mb-6 leading-relaxed;
+}
+
+.prose ul,
+.prose ol {
+  @apply mb-6 ml-6 space-y-2;
+}
+
+.prose ul {
+  @apply list-disc;
+}
+
+.prose ol {
+  @apply list-decimal;
+}
+
+.prose li {
+  @apply leading-relaxed;
+}
+
+.prose strong {
+  @apply font-bold text-violet-600;
+}
+
+.prose code {
+  @apply px-2 py-1 rounded text-sm font-mono;
+  background: rgba(139, 92, 246, 0.1);
+  color: #8b5cf6;
+}
+
+.prose pre {
+  @apply p-6 rounded-xl mb-6 overflow-x-auto;
+  background: #1e1e1e;
+}
+
+.prose pre code {
+  @apply p-0 bg-transparent text-zinc-100;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-violet-600 pl-6 italic my-8;
+  color: inherit;
+}
+
+.prose a {
+  @apply text-violet-600 hover:text-violet-500 transition-colors underline;
+}
+
+.prose img {
+  @apply rounded-xl my-8 shadow-lg;
+}
+
+/* Dark mode prose */
+.prose-invert h2,
+.prose-invert h3,
+.prose-invert h4 {
+  @apply text-zinc-100;
+}
+
+.prose-invert p {
+  @apply text-zinc-300;
+}
+
+.prose-invert strong {
+  @apply text-violet-400;
+}
+
+.prose-invert code {
+  background: rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
+}
+
+.prose-invert blockquote {
+  @apply text-zinc-400;
+}
+
+/* Line clamp utilities */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
