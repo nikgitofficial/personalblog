@@ -33,12 +33,23 @@ export default function Navbar({
     >
       <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
         <div className="flex items-center gap-12">
-          <h1
-            className="font-serif text-2xl font-bold tracking-tight"
-            style={{ fontFamily: "Playfair Display, serif" }}
-          >
-            NikBlog
-          </h1>
+          {/* Logo + Site title */}
+          <div className="flex items-center gap-3">
+          <img
+  src="/logo.png"
+  alt="NikBlog Logo"
+  className={`w-10 h-10 object-contain transition-all duration-300 ${
+    isDark ? "filter invert brightness-125" : ""
+  }`}
+/>
+
+            <h1
+              className="font-serif text-2xl font-bold tracking-tight"
+              style={{ fontFamily: "Playfair Display, serif" }}
+            >
+             {/*NikBlog */}
+            </h1>
+          </div>
 
           {/* Desktop nav */}
           <div className="hidden md:flex gap-8">
