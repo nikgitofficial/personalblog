@@ -33,28 +33,30 @@ const PersonalBlog = () => {
   // Use the same type everywhere
   type ArticleId = string | number;
 
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [mounted, setMounted] = useState(false);
+ 
   const [currentView, setCurrentView] = useState<'home' | 'article' | 'project'>('home');
   const [selectedArticle, setSelectedArticle] = useState<typeof blogPosts[number] | null>(null);
   const [selectedProject, setSelectedProject] = useState<typeof projects[number] | null>(null);
-
+  const [mounted, setMounted] = useState<boolean>(false);
   const [likedArticles, setLikedArticles] = useState<Set<ArticleId>>(new Set());
   const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<ArticleId>>(new Set());
 
   const [showWelcome, setShowWelcome] = useState(true);
 
 
-  useEffect(() => {
-    setMounted(true);
-    const timer = setTimeout(() => {
-      setShowWelcome(false);
-    }, 2800);
-    return () => clearTimeout(timer);
-  }, []);
+ useEffect(() => {
+  setMounted(true);
+  const timer = setTimeout(() => {
+    setShowWelcome(false);
+  }, 2800);
+
+  return () => clearTimeout(timer);
+}, []);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -1452,31 +1454,31 @@ const toggleLike = (articleId: ArticleId) => {
     });
   };
 
-  const shareArticle = (article) => {
-    if (navigator.share) {
-      navigator.share({
-        title: article.title,
-        text: article.excerpt,
-        url: window.location.href,
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
-    }
-  };
+const shareArticle = (article: typeof blogPosts[number]) => {
+  if (navigator.share) {
+    navigator.share({
+      title: article.title,
+      text: article.excerpt,
+      url: window.location.href,
+    }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    alert('Link copied to clipboard!');
+  }
+};
 
-  const shareProject = (project) => {
-    if (navigator.share) {
-      navigator.share({
-        title: project.title,
-        text: project.description,
-        url: window.location.href,
-      }).catch(() => {});
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert('Link copied to clipboard!');
-    }
-  };
+const shareProject = (project: typeof projects[number]) => {
+  if (navigator.share) {
+    navigator.share({
+      title: project.title,
+      text: project.description,
+      url: window.location.href,
+    }).catch(() => {});
+  } else {
+    navigator.clipboard.writeText(window.location.href);
+    alert('Link copied to clipboard!');
+  }
+};
 
   const filteredPosts = selectedCategory === "All"
     ? blogPosts
