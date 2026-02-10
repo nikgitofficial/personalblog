@@ -3,6 +3,16 @@
 import React from "react";
 import { Moon, Sun, Menu, X } from "lucide-react";
 
+// Define the props type
+type NavbarProps = {
+  isDark: boolean;
+  setIsDark: React.Dispatch<React.SetStateAction<boolean>>;
+  isMenuOpen: boolean;
+  setIsMenuOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  scrollY: number;
+  scrollToSection: (sectionId: string) => void;
+};
+
 export default function Navbar({
   isDark,
   setIsDark,
@@ -10,7 +20,7 @@ export default function Navbar({
   setIsMenuOpen,
   scrollY,
   scrollToSection,
-}) {
+}: NavbarProps) {
   const navItems = ["Articles", "About", "Projects", "Contact"];
 
   return (
