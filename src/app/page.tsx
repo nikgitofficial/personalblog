@@ -29,16 +29,22 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 
 const PersonalBlog = () => {
+  
+  type ArticleId = string | number;
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [mounted, setMounted] = useState(false);
   const [currentView, setCurrentView] = useState('home');
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [likedArticles, setLikedArticles] = useState(new Set());
-  const [bookmarkedArticles, setBookmarkedArticles] = useState(new Set());
+  const [selectedArticle, setSelectedArticle] = useState<number | null>(null);
+  const [selectedProject, setSelectedProject] = useState<number | null>(null);
+  const [likedArticles, setLikedArticles] = useState<Set<ArticleId>>(
+  new Set<ArticleId>()
+);
+ const [bookmarkedArticles, setBookmarkedArticles] = useState<Set<ArticleId>>(
+  new Set<ArticleId>()
+);
   const [showWelcome, setShowWelcome] = useState(true);
 
   useEffect(() => {
