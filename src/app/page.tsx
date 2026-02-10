@@ -1361,71 +1361,79 @@ export default function RootLayout({ children }) {
   const headerOpacity = currentView === 'home' ? Math.max(0, 1 - scrollY / 300) : 0;
   const headerScale = currentView === 'home' ? Math.max(0.9, 1 - scrollY / 1000) : 0.9;
 
-  const scrollToSection = (sectionId) => {
-    if (currentView === 'article' || currentView === 'project') {
-      setCurrentView('home');
-      setSelectedArticle(null);
-      setSelectedProject(null);
-      setTimeout(() => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      }, 100);
-    } else {
+ const scrollToSection = (sectionId: string) => {
+  if (currentView === 'article' || currentView === 'project') {
+    setCurrentView('home');
+    setSelectedArticle(null);
+    setSelectedProject(null);
+
+    setTimeout(() => {
       const element = document.getElementById(sectionId);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
+    }, 100);
+  } else {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    setIsMenuOpen(false);
-  };
+  }
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    const email = form.elements.namedItem('email').value;
-    alert(`Thank you! Subscription request sent for: ${email}`);
-    form.reset();
-  };
+  setIsMenuOpen(false);
+};
 
-  const openArticle = (article) => {
-    setSelectedArticle(article);
-    setSelectedProject(null);
-    setCurrentView('article');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+const handleSubscribe = (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
 
-  const closeArticle = () => {
-    setCurrentView('home');
-    setSelectedArticle(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const form = e.currentTarget;
+  const emailInput = form.elements.namedItem('email') as HTMLInputElement | null;
+  const email = emailInput?.value ?? '';
 
-  const openProject = (project) => {
-    setSelectedProject(project);
-    setSelectedArticle(null);
-    setCurrentView('project');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  alert(`Thank you! Subscription request sent for: ${email}`);
+  form.reset();
+};
 
-  const closeProject = () => {
-    setCurrentView('home');
-    setSelectedProject(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+const openArticle = (article: any) => {
+  setSelectedArticle(article);
+  setSelectedProject(null);
+  setCurrentView('article');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
 
-  const toggleLike = (articleId) => {
-    setLikedArticles(prev => {
-      const newSet = new Set(prev);
-      if (newSet.has(articleId)) {
-        newSet.delete(articleId);
-      } else {
-        newSet.add(articleId);
-      }
-      return newSet;
-    });
-  };
+const closeArticle = () => {
+  setCurrentView('home');
+  setSelectedArticle(null);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+const openProject = (project: any) => {
+  setSelectedProject(project);
+  setSelectedArticle(null);
+  setCurrentView('project');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+const closeProject = () => {
+  setCurrentView('home');
+  setSelectedProject(null);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
+const toggleLike = (articleId: string | number) => {
+  setLikedArticles((prev: Set<string | number>) => {
+    const newSet = new Set(prev);
+
+    if (newSet.has(articleId)) {
+      newSet.delete(articleId);
+    } else {
+      newSet.add(articleId);
+    }
+
+    return newSet;
+  });
+};
+
 
   const toggleBookmark = (articleId) => {
     setBookmarkedArticles(prev => {
